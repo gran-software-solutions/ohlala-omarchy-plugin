@@ -79,6 +79,8 @@ Left on your computer, in case you use them elsewhere:
 
 Hold a letter for a moment and the popup appears. Hold `Shift` too for capitals.
 
+<img src="demo.webp" alt="Typing Oh là là in a terminal: after Oh l, holding a opens the popup, a moves to à, Enter types it, and the same again for the second là" width="640">
+
 | | |
 | --- | --- |
 | `1` – `9` | Pick that character |
