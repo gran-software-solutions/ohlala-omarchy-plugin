@@ -70,7 +70,9 @@ setup() {
   fi
 
   conf=$(mktemp)
-  trap 'rm -f "$conf"' EXIT
+  # Expand now: $conf is local and gone by the time the EXIT trap runs.
+  # shellcheck disable=SC2064
+  trap "rm -f '$conf'" EXIT
   local cmd="command(runuser -u $(id -un) -- $SELF"
   {
     echo "$KEYD_MARKER from $accents. Do not edit by hand."
@@ -97,11 +99,9 @@ setup() {
     return
   fi
   sudo install -Dm644 "$conf" "$KEYD_CONF" || exit 1
-  if systemctl is-active --quiet keyd; then
-    sudo keyd reload
-  else
-    sudo systemctl enable --now keyd
-  fi
+  # A restart, not `keyd reload`: keyd 2.6 can segfault reloading while the
+  # Enter that ran this command is still going through it.
+  sudo systemctl enable keyd && sudo systemctl restart keyd || exit 1
   echo "Oh là là is ready. Hold one of these letters: $keys"
 }
 
@@ -111,7 +111,7 @@ remove() {
     return
   fi
   keyd_conf_is_ours || { echo "ohlala: $KEYD_CONF was not written by ohlala, leaving it alone." >&2; exit 1; }
-  sudo rm -f "$KEYD_CONF" && sudo keyd reload
+  sudo rm -f "$KEYD_CONF" && sudo systemctl restart keyd
   echo "Removed $KEYD_CONF. keyd is still installed; stop it with: sudo systemctl disable --now keyd"
 }
 
