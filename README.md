@@ -52,16 +52,27 @@ never goes online. `ohlala remove` deletes the file again.
 
 Stuck keyboard? Press `Backspace` + `Escape` + `Enter` together to stop keyd right away.
 
-### Update and remove
+### Update
 
 ```bash
 omarchy plugin update de.gransoftware.ohlala
 ```
 
+### Remove
+
 ```bash
 ~/.config/omarchy/plugins/de.gransoftware.ohlala/bin/ohlala remove
 omarchy plugin remove de.gransoftware.ohlala
 ```
+
+The first line deletes `/etc/keyd/default.conf`, so holding a letter does nothing special
+anymore. The second deletes the plugin folder.
+
+Left on your computer, in case you use them elsewhere:
+
+- the four packages. Remove them with `sudo pacman -Rs keyd wtype wl-clipboard jq`
+- the keyd service, now idle. Turn it off with `sudo systemctl disable --now keyd`
+- your own letter list, if you made one: `~/.config/ohlala`
 
 ## Use
 
