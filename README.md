@@ -9,9 +9,9 @@ Hold a letter, pick é, ñ, ü or č from a popup.
 
 <br>
 
-<img src="preview.png" alt="The Oh là là popup after holding e: € é è ê ë ē ė ę, with é highlighted and the flags of French, Spanish, Hungarian and Czech below" width="502">
+<img src="preview-light.webp" alt="A finger holds the E key on a white keyboard; above it the Oh là là popup offers € é è ê ë ē ė ę, with é highlighted and the flags of French, Spanish, Hungarian and Czech below" width="49%">&nbsp;<img src="preview-dark.webp" alt="The same popup in the dark Tokyo Night theme, above a finger holding the E key on a backlit dark keyboard" width="49%">
 
-<sub>Follows the active Omarchy theme and font.</sub>
+<sub>Follows the active Omarchy theme and font — Snow and Tokyo Night here.</sub>
 
 </div>
 

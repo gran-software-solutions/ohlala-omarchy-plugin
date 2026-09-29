@@ -177,6 +177,7 @@ Item {
       border.width: 1
       border.color: Util.alpha(Color.popups.text, 0.14)
       radius: Style.space(6)
+      scale: 2.5
 
       opacity: root.opened ? 1 : 0
       Behavior on opacity { NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }
