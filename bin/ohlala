@@ -99,8 +99,7 @@ setup() {
     return
   fi
   sudo install -Dm644 "$conf" "$KEYD_CONF" || exit 1
-  # A restart, not `keyd reload`: keyd 2.6 can segfault reloading while the
-  # Enter that ran this command is still going through it.
+  # A restart, not `keyd reload`: keyd 2.6 segfaulted on reload here.
   sudo systemctl enable keyd && sudo systemctl restart keyd || exit 1
   echo "Oh là là is ready. Hold one of these letters: $keys"
 }
