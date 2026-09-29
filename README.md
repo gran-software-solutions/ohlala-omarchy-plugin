@@ -25,8 +25,32 @@ omarchy plugin add https://github.com/gran-software-solutions/ohlala-omarchy-plu
 ~/.config/omarchy/plugins/de.gransoftware.ohlala/bin/ohlala setup
 ```
 
-`setup` writes `/etc/keyd/default.conf` and starts [keyd](https://github.com/rvaiya/keyd),
-so it asks for your sudo password. It refuses to overwrite a keyd config it did not write.
+### What you install, and why
+
+Omarchy can't tell a quick tap of `e` from a long hold, so the plugin needs a little help:
+
+| Package | What it does here |
+| --- | --- |
+| [keyd](https://github.com/rvaiya/keyd) | Notices when you hold a letter. A tap still types the letter as usual. |
+| wtype | Types the character you picked into terminals. |
+| wl-clipboard | Pastes the character in other apps, like the browser, then puts your clipboard back. |
+| jq | Passes the list of characters to the popup. |
+
+All four come from the official Arch repositories.
+
+### What `setup` changes
+
+keyd works for every keyboard on the computer, so it runs as a system service. That's why
+`setup` asks for your sudo password. It uses it for two things only:
+
+1. It writes one file, `/etc/keyd/default.conf`, that lists the letters to watch.
+2. It turns on the keyd service.
+
+Nothing else is changed. Each letter you hold starts the popup as your own user, not as root.
+If you already have your own keyd config, `setup` stops and doesn't touch it. The plugin
+never goes online. `ohlala remove` deletes the file again.
+
+Stuck keyboard? Press `Backspace` + `Escape` + `Enter` together to stop keyd right away.
 
 ### Update and remove
 
@@ -86,8 +110,6 @@ no cold start.
 When you pick, the overlay calls `bin/ohlala type <char>`. In terminals it types
 the character with `wtype`. Everywhere else it pastes it and puts your previous
 clipboard back, because Chromium drops characters that `wtype` types.
-
-If the keyboard ever misbehaves, `Backspace` + `Escape` + `Enter` kills keyd.
 
 </details>
 
