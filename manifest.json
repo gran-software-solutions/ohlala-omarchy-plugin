@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "de.gransoftware.ohlala",
+  "name": "Oh là là",
+  "version": "1.0.0",
+  "author": "Gran Software Solutions",
+  "license": "MIT",
+  "description": "Hold a letter to pick its accented versions: é, ñ, ü, č and friends, like on a phone.",
+  "kinds": ["overlay"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "overlay": "Ohlala.qml"
+  }
+}
