@@ -70,8 +70,9 @@ anymore. The second deletes the plugin folder.
 
 Left on your computer, in case you use them elsewhere:
 
-- the four packages. Remove them with `sudo pacman -Rs keyd wtype wl-clipboard jq`
-- the keyd service, now idle. Turn it off with `sudo systemctl disable --now keyd`
+- the keyd service, now idle. Turn it off and uninstall it with
+  `sudo systemctl disable --now keyd && sudo pacman -Rs keyd`
+- wtype, wl-clipboard and jq. Keep them: Omarchy and other apps use them too
 - your own letter list, if you made one: `~/.config/ohlala`
 
 ## Use
