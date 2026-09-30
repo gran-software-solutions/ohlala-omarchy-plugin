@@ -55,6 +55,14 @@ keyd_conf_is_ours() {
   [[ ! -e $KEYD_CONF ]] || head -1 "$KEYD_CONF" | grep -qF "$KEYD_MARKER"
 }
 
+# keyd runs command(...) through a root shell before runuser drops privileges,
+# so everything put into that line must be inert to the shell. Rather than
+# quoting (keyd's own parser also splits on ',' and ')'), allow only plain
+# path and user-name characters and refuse anything else.
+safe_for_keyd() {
+  [[ $1 =~ ^[A-Za-z0-9_./-]+$ ]]
+}
+
 setup() {
   (( EUID != 0 )) || { echo "ohlala: run setup as your own user, not with sudo; it asks for sudo itself." >&2; exit 1; }
   require keyd wtype wl-copy wl-paste jq
@@ -73,7 +81,16 @@ setup() {
   # Expand now: $conf is local and gone by the time the EXIT trap runs.
   # shellcheck disable=SC2064
   trap "rm -f '$conf'" EXIT
-  local cmd="command(runuser -u $(id -un) -- $SELF"
+  local user
+  user=$(id -un)
+  if ! safe_for_keyd "$user" || ! safe_for_keyd "$SELF"; then
+    echo "ohlala: keyd would run this line as root, so it only accepts letters, digits and _ . / - in it." >&2
+    echo "  user:   $user" >&2
+    echo "  helper: $SELF" >&2
+    echo "Install the plugin under a plain path (the default ~/.config/omarchy/plugins works) and run setup again." >&2
+    exit 1
+  fi
+  local cmd="command(runuser -u $user -- $SELF"
   {
     echo "$KEYD_MARKER from $accents. Do not edit by hand."
     echo "# Remove with 'ohlala remove'. Panic escape if the keyboard misbehaves: Backspace+Escape+Enter kills keyd."
