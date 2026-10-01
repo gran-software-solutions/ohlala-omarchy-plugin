@@ -50,6 +50,9 @@ Nothing else is changed. Each letter you hold starts the popup as your own user,
 If you already have your own keyd config, `setup` stops and doesn't touch it. The plugin
 never goes online. `ohlala remove` deletes the file again.
 
+The file carries a checksum of itself. If you edit it by hand, `setup` and `remove` notice
+and leave your edits alone; move or delete the file yourself to start fresh.
+
 Stuck keyboard? Press `Backspace` + `Escape` + `Enter` together to stop keyd right away.
 
 ### Update
